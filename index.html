@@ -4,89 +4,32 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>Animal Buttons</title>
+  <link type="text/javascript" href="giftastic.js"/>
+  <link type="text/css" href="giftastic.css"/>
+  <title>Animal Gifs</title>
 
 </head>
 
 <body>
 
-  <div id="buttonArea"></div>
+    <div class="container" style="background: transparent;">
+        <h1 class="text-center">Adorable Animals of Giphy</h1>
+        
+        <div id="animal-buttons"> </div>
+    
+        <div class="container" id="btn" style="background: transparent;">
+            <form>
+                <label id="add" for="animal-input">Search Animals</label>
+                <input type="text" class="form-control" id="animal-input">
+            </form>
+            <button onclick="submitButtonClicked()" type="button" id="add-animal" class="btn btn-success">Submit</button>
 
-  <div id="gifArea"></div>
-
-<div>
-  <form>
-    <fieldset>
-        <label for="animal-input">Search for Animals</label><br>
-      <input type="text" placeholder="Search" id="animal-input">
-      <button type="submit" class="btn submit" data="submitBtn">Submit</button>
-    </fieldset>
-  </form>
-</div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript">
-var newAnimal = "";
-var animal="";
-
-var buttonGenerator = function (){
-        $("#buttonArea").empty();
-        for(i = 0; i < animal.length; i++) {
-            var button = $("<button type=" + "button" + ">" + animal[i] + "</button>").addClass("btn btn-warning").attr("data-animal",animal[i]);
-            $("#buttonArea").append(button);
-        };
-    }
-
-    $("buttonArea").on("click", ".btn", function() {
-      var animal = $(this).attr("data-animal");
-      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      animal + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
-
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).done(function(response) {
-          var results = response.data;
-          $("#buttonArea").empty();
-          for (var i = 0; i < results.length; i++) {
-            var gifDiv = $("<div>");
-
-            var p = $("<p>").text("Rating: " + results[i].rating);
-            var animalImage = $("<img>");
-            animalImage.attr("src", results[i].images.fixed_height_still.url);
-            animalImage.attr("data-still", results[i].images.fixed_height_still.url);
-            animalImage.attr("data-animate", results[i].images.fixed_height.url);
-            animalImage.attr("data-state", "still");
-            animalImage.attr("gif");
-            
-            gifDiv.append(animalImage);
-	 			gifDiv.append(p); 			
-	 			$("#gifArea").prepend(gifDiv);
- 			}
-  		})
-    })
-$("#gifArea").on("click", ".gif", function(event){
-	event.preventDefault();
-	var state = $(this).attr("data-state");
-	if (state === "still") {
-    $(this).attr("src", $(this).attr("data-animate"));
-    $(this).attr("data-state", "animate");
-  } else {
-    $(this).attr("src", $(this).attr("data-still"));
-    $(this).attr("data-state", "still");
-  }
-
-})
-$(".submit").on("click", function(event){
-	event.preventDefault();
-	console.log("submit");
-	newAnimal = $("#animal-input").val();
-	animal.push(newAnimal);
-	console.log(animal);
-	buttonGenerator();
-});
-buttonGenerator();
-  </script>
+            <div id="animals"> </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous" type="text/javascript"></script>
+   
 </body>
 
 </html>
